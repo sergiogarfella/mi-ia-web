@@ -13,6 +13,7 @@ st.write("Dibuja un número del 0 al 9 en el recuadro negro.")
 @st.cache_resource
 def load_my_model():
     return tf.keras.models.load_model('modelo_mnist.keras')
+
 model = load_my_model()
 
 # 2. Crear el lienzo (Canvas) para dibujar
@@ -32,7 +33,7 @@ if canvas_result.image_data is not None:
     # Convertir el dibujo a 28x28 píxeles (formato MNIST)
     img = cv2.resize(canvas_result.image_data.astype('uint8'), (28, 28))
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img = img / 255.0 # Normalizar
+    img = img / 255.0  # Normalizar
 
     # Predicción
     pred = model.predict(img.reshape(1, 28, 28, 1))
@@ -47,4 +48,4 @@ if canvas_result.image_data is not None:
     else:
         st.success(f"Confianza alta: {confianza:.2%}")
 
-    st.bar_chart(pred[0]) # Visualización de probabilidades
+    st.bar_chart(pred[0])  # Visualización de probabilidades
